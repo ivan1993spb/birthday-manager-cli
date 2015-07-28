@@ -118,7 +118,3 @@ func (b *Birthday) GetTime() time.Time {
 
 	return t
 }
-
-func (b *Birthday) GetAge() time.Duration {
-	return time.Now().Sub(b.GetTime())
-}

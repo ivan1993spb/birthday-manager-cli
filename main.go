@@ -97,7 +97,11 @@ func main() {
 				}
 
 				for _, bday := range bset {
-					fmt.Println(bday.Name())
+					fmt.Printf("Birthday: %s, %d %s\n",
+						bday.Name,
+						bday.GetTime().Day(),
+						bday.GetTime().Month(),
+					)
 				}
 			},
 			Flags: []cli.Flag{
