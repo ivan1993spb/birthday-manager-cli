@@ -29,12 +29,17 @@ func main() {
 	app.Version = APP_VERSION
 	app.Authors = []cli.Author{{AUTHOR_NAME, AUTHOR_EMAIL}}
 
-	// Checking storage file
+	// Birthday storage
+	var storage *BirthdayStorage
+
+	// Checking storage file and loading data
 	app.Before = func(c *cli.Context) error {
 		stf := c.String("file")
+
 		if stf == "" {
 			return &Error{"passed empty birthday storage file name"}
 		}
+
 		if fi, err := os.Stat(stf); err != nil {
 			if os.IsNotExist(err) {
 				return &Error{"no such file " + stf}
@@ -43,6 +48,13 @@ func main() {
 		} else if fi.Mode().IsDir() {
 			return &Error{"cannot use folder as birthday storege"}
 		}
+
+		storage = NewBirthdayStorage(stf)
+
+		if err := storage.Load(); err != nil {
+			return &Error{"cannot load birthdays: " + err.Error()}
+		}
+
 		return nil
 	}
 
@@ -75,7 +87,18 @@ func main() {
 			Aliases: []string{"s"},
 			Usage:   "print name, age and next birthday date",
 			Action: func(c *cli.Context) {
+				bset := storage.GetBirthdaySet()
 
+				if c.IsSet("duration") {
+					bset = bset.FilterByDuration(c.Duration("duration"))
+				}
+				if c.IsSet("name") {
+					bset = bset.FilterByName(c.String("name"))
+				}
+
+				for _, bday := range bset {
+					fmt.Println(bday.Name())
+				}
 			},
 			Flags: []cli.Flag{
 				&cli.DurationFlag{
