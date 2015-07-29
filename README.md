@@ -23,6 +23,8 @@ Install
 ```bash
 $ go get github.com/ivan1993spb/birthday-manager-cli
 $ cd $GOPATH/src/github.com/ivan1993spb/birthday-manager-cli
+$ go build
+$ go install
 ```
 
 Preferences
