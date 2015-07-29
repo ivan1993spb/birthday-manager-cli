@@ -61,19 +61,17 @@ func main() {
 	// Setup app commands
 	app.Commands = []cli.Command{
 		{
-			Name:    "create",
-			Aliases: []string{"c"},
-			Usage:   "create birthday",
+			Name:  "create",
+			Usage: "Create birthday",
 			Action: func(c *cli.Context) {
-
+				fmt.Println("command not supported")
 			},
 		},
 		{
-			Name:    "remove",
-			Aliases: []string{"r"},
-			Usage:   "remove birthdays",
+			Name:  "remove",
+			Usage: "Remove birthdays",
 			Action: func(c *cli.Context) {
-
+				fmt.Println("command not supported")
 			},
 			Flags: []cli.Flag{
 				&cli.StringFlag{
@@ -83,9 +81,8 @@ func main() {
 			},
 		},
 		{
-			Name:    "show",
-			Aliases: []string{"s"},
-			Usage:   "print name, age and next birthday date",
+			Name:  "show",
+			Usage: "Print name, age and next birthday date",
 			Action: func(c *cli.Context) {
 				bset := storage.GetBirthdaySet()
 
@@ -96,12 +93,15 @@ func main() {
 					bset = bset.FilterByName(c.String("name"))
 				}
 
-				for _, bday := range bset {
-					fmt.Printf("Birthday: %s, %d %s\n",
-						bday.Name,
-						bday.GetTime().Day(),
-						bday.GetTime().Month(),
-					)
+				switch len(bset) {
+				case 0:
+				case 1:
+					fmt.Printf("Birthday: %d %s, %s\n", bset[0].GetTime().Day(), bset[0].GetTime().Month(), bset[0].Name)
+				default:
+					fmt.Println("Birthdays:")
+					for _, bday := range bset {
+						fmt.Printf(" %2d %-10s | %s\n", bday.GetTime().Day(), bday.GetTime().Month(), bday.Name)
+					}
 				}
 			},
 			Flags: []cli.Flag{

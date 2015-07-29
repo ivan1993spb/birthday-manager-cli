@@ -86,9 +86,13 @@ func (bs BirthdaySet) FilterByDuration(d time.Duration) BirthdaySet {
 	tnow := time.Now()
 
 	for _, bday := range bs {
+		// Time of born
 		tbday := bday.GetTime()
+
+		// Birthday in current year
 		btime := time.Date(tnow.Year(), tbday.Month(), tbday.Day(),
 			0, 0, 0, 0, time.Local)
+
 		diff := btime.Sub(tnow)
 
 		if (diff >= 0 && diff < d) || (diff < 0 && diff > d) {
