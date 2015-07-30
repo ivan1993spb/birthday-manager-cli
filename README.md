@@ -30,6 +30,8 @@ $ go install
 Preferences
 -----------
 
+~/.bashrc
+
 ```bash
 ### Birthdays
 date
