@@ -27,20 +27,38 @@ $ go build
 $ go install
 ```
 
-Preferences
------------
+Usage
+-----
 
-~/.bashrc
+### First example script
 
 ```bash
 ### Birthdays
-date
+#!/bin/bash
+echo "Birthdays:"
 birthday-manager-cli \
 --file $HOME'/.config/birthday-manager-cli/conf.json' \
 show --duration 240h
 ```
 
-example conf.json:
+### Second example script
+
+```bash
+#!/bin/bash
+
+birthdays="$(birthday-manager-cli --file $HOME'/.config/birthday-manager-cli/conf.json' show --duration 240h)"
+title="Birthday"
+
+if [ `wc -l <<< "$birthdays"` -gt 1 ] ; then
+	title="$title"s
+fi
+
+notify-send --icon="$GOPATH/src/github.com/ivan1993spb/birthday-manager-cli/icon.png" "$title" "$birthdays"
+
+```
+
+example conf.json
+-----------------
 
 ```json
 [

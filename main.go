@@ -93,14 +93,9 @@ func main() {
 					bset = bset.FilterByName(c.String("name"))
 				}
 
-				switch len(bset) {
-				case 0:
-				case 1:
-					fmt.Printf("Birthday: %d %s, %s\n", bset[0].GetTime().Day(), bset[0].GetTime().Month(), bset[0].Name)
-				default:
-					fmt.Println("Birthdays:")
+				if len(bset) > 0 {
 					for _, bday := range bset {
-						fmt.Printf(" %2d %-10s | %s\n", bday.GetTime().Day(), bday.GetTime().Month(), bday.Name)
+						fmt.Printf("%d %s - %s\n", bday.GetTime().Day(), bday.GetTime().Month(), bday.Name)
 					}
 				}
 			},
