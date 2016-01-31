@@ -33,7 +33,6 @@ Usage
 ### First example script
 
 ```bash
-### Birthdays
 #!/bin/bash
 echo "Birthdays:"
 birthday-manager-cli \
@@ -57,7 +56,7 @@ notify-send --icon="$GOPATH/src/github.com/ivan1993spb/birthday-manager-cli/icon
 
 ```
 
-example conf.json
+Example conf.json
 -----------------
 
 ```json
